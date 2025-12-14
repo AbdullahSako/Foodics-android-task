@@ -68,4 +68,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.androidx.material3.adaptive.navigation3)
 
+    //adaptive navigation suite
+    implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
+
+    //material icons
+    implementation(libs.androidx.compose.material.icons.extended)
 }
