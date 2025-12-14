@@ -16,9 +16,9 @@ enum class NavSuiteItem(
     val navKey: NavKey
 ) {
 
-    TABLES(R.string.tables, Icons.Default.Restaurant, TablesScreen),
-    ORDERS(R.string.orders, Icons.AutoMirrored.Filled.MenuBook, OrdersScreen),
-    MENU(R.string.menu, Icons.Default.LocalDining, MenuScreen),
-    SETTINGS(R.string.settings, Icons.Default.Settings, SettingsScreen);
+    TABLES(R.string.tables, Icons.Default.Restaurant, TablesScreenKey),
+    ORDERS(R.string.orders, Icons.AutoMirrored.Filled.MenuBook, OrdersScreenKey),
+    MENU(R.string.menu, Icons.Default.LocalDining, MenuScreenKey),
+    SETTINGS(R.string.settings, Icons.Default.Settings, SettingsScreenKey);
 
 }

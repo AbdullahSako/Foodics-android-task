@@ -12,17 +12,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.navigation3.runtime.rememberNavBackStack
 import com.sako.foodics_android_task.ui.navigation.FoodicsAndroidTaskNavGraph
 import com.sako.foodics_android_task.ui.navigation.NavSuiteItem
-import com.sako.foodics_android_task.ui.navigation.TablesScreen
+import com.sako.foodics_android_task.ui.navigation.TablesScreenKey
 import com.sako.foodics_android_task.ui.theme.FoodicsandroidtaskTheme
 
 @Composable
 fun FoodicsAndroidTaskApp() {
     FoodicsandroidtaskTheme() {
-        val backStack = rememberNavBackStack(TablesScreen)
+        val navBackStack = rememberNavBackStack(TablesScreenKey)
         var currentSelectedNavSuiteItem by rememberSaveable { mutableStateOf(NavSuiteItem.TABLES) }
 
 
@@ -34,15 +33,15 @@ fun FoodicsAndroidTaskApp() {
                     label = { Text(text = stringResource(it.label)) },
                     onClick = {
                         currentSelectedNavSuiteItem = it
-                        backStack.removeLastOrNull()
-                        backStack.add(it.navKey)
+                        navBackStack.removeLastOrNull()
+                        navBackStack.add(it.navKey)
                     })
             }
 
         }) {
             Box(modifier = Modifier.fillMaxSize()) {
                 FoodicsAndroidTaskNavGraph(
-                    backStack = backStack
+                    navBackStack = navBackStack
                 )
             }
         }
