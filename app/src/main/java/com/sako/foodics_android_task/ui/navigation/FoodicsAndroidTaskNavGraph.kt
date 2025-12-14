@@ -10,6 +10,10 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.sako.foodics_android_task.ui.screens.menu.MenuScreen
+import com.sako.foodics_android_task.ui.screens.orders.OrdersScreen
+import com.sako.foodics_android_task.ui.screens.settings.SettingsScreen
+import com.sako.foodics_android_task.ui.screens.tables.TablesScreen
 
 @Composable
 fun FoodicsAndroidTaskNavGraph(modifier: Modifier = Modifier, backStack: NavBackStack<NavKey>) {
@@ -20,24 +24,16 @@ fun FoodicsAndroidTaskNavGraph(modifier: Modifier = Modifier, backStack: NavBack
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
             entry<TablesScreen> {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(modifier = Modifier.align(Alignment.Center), text = "Tables Screen")
-                }
+                TablesScreen()
             }
             entry<OrdersScreen> {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(modifier = Modifier.align(Alignment.Center), text ="Orders Screen")
-                }
+                OrdersScreen()
             }
             entry<MenuScreen> {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(modifier = Modifier.align(Alignment.Center), text ="Menu Screen")
-                }
+                MenuScreen()
             }
             entry<SettingsScreen> {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(modifier = Modifier.align(Alignment.Center), text ="Settings Screen")
-                }
+                SettingsScreen()
             }
         })
 
