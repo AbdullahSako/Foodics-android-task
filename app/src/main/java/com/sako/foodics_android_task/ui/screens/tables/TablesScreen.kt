@@ -6,9 +6,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.sako.foodics_android_task.utils.ext.logd
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun TablesScreen(modifier: Modifier = Modifier) {
+fun TablesScreen(modifier: Modifier = Modifier,viewModel: TablesScreenViewModel = koinViewModel()) {
+
     Box(modifier = Modifier.fillMaxSize()) {
         Text(modifier = Modifier.align(Alignment.Center), text = "Tables Screen")
     }
