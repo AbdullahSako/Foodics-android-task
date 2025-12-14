@@ -73,4 +73,8 @@ dependencies {
 
     //material icons
     implementation(libs.androidx.compose.material.icons.extended)
+
+    //koin
+    implementation(libs.io.insert.koin.android)
+    implementation(libs.io.insert.koin.compose)
 }
