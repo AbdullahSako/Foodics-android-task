@@ -1,10 +1,6 @@
 package com.sako.foodics_android_task.ui.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
@@ -16,23 +12,23 @@ import com.sako.foodics_android_task.ui.screens.settings.SettingsScreen
 import com.sako.foodics_android_task.ui.screens.tables.TablesScreen
 
 @Composable
-fun FoodicsAndroidTaskNavGraph(modifier: Modifier = Modifier, backStack: NavBackStack<NavKey>) {
+fun FoodicsAndroidTaskNavGraph(modifier: Modifier = Modifier, navBackStack: NavBackStack<NavKey>) {
 
     NavDisplay(
         modifier = modifier,
-        backStack = backStack,
-        onBack = { backStack.removeLastOrNull() },
+        backStack = navBackStack,
+        onBack = { navBackStack.removeLastOrNull() },
         entryProvider = entryProvider {
-            entry<TablesScreen> {
+            entry<TablesScreenKey> {
                 TablesScreen()
             }
-            entry<OrdersScreen> {
+            entry<OrdersScreenKey> {
                 OrdersScreen()
             }
-            entry<MenuScreen> {
+            entry<MenuScreenKey> {
                 MenuScreen()
             }
-            entry<SettingsScreen> {
+            entry<SettingsScreenKey> {
                 SettingsScreen()
             }
         })
