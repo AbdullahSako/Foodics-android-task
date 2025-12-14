@@ -1,4 +1,4 @@
-package com.sako.foodics_android_task.ui
+package com.sako.foodics_android_task.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
@@ -14,3 +14,4 @@ data object MenuScreen: NavKey
 
 @Serializable
 data object SettingsScreen: NavKey
+
