@@ -2,6 +2,7 @@ package com.sako.foodics_android_task
 
 import android.app.Application
 import com.sako.foodics_android_task.di.appModule
+import com.sako.foodics_android_task.di.dataModule
 import com.sako.foodics_android_task.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -20,7 +21,7 @@ class FoodicsAndroidTaskApplication: Application() {
         startKoin {
             androidLogger()
             androidContext(this@FoodicsAndroidTaskApplication)
-            modules(appModule, networkModule)
+            modules(appModule, networkModule,dataModule)
         }
     }
 }
