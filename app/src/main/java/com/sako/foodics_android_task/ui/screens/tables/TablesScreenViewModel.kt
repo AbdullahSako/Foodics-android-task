@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.sako.foodics_android_task.utils.Result
+import com.sako.foodics_android_task.utils.resultWrapper.Result
 
 class TablesScreenViewModel(
     private val productRepository: ProductRepository,

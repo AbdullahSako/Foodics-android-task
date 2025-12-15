@@ -7,6 +7,7 @@ import com.sako.foodics_android_task.data.model.external.Product
 import com.sako.foodics_android_task.data.model.network.NetworkCategory
 import com.sako.foodics_android_task.data.model.network.NetworkProduct
 import com.sako.foodics_android_task.data.model.network.toExternal
+import com.sako.foodics_android_task.utils.resultWrapper.NetworkError
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -14,7 +15,7 @@ import io.ktor.client.request.parameter
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.SerializationException
-import com.sako.foodics_android_task.utils.Result
+import com.sako.foodics_android_task.utils.resultWrapper.Result
 import kotlinx.coroutines.flow.flow
 
 class ProductRepositoryImpl(private val httpClient: HttpClient): ProductRepository {
@@ -29,10 +30,10 @@ class ProductRepositoryImpl(private val httpClient: HttpClient): ProductReposito
                 parameter("key", BuildConfig.mockaroo_api_key)
             }
         } catch (e: UnresolvedAddressException) {
-            emit(Result.Error(message = "No internet connection"))
+            emit(Result.Error(errorType = NetworkError.NO_INTERNET))
             return@flow
         } catch (e: SerializationException) {
-            emit(Result.Error(message = "serialization error"))
+            emit(Result.Error(errorType = NetworkError.SERIALIZATION))
             return@flow
         }
 
@@ -41,12 +42,12 @@ class ProductRepositoryImpl(private val httpClient: HttpClient): ProductReposito
                 val productList = response.body<List<NetworkProduct>>()
                 Result.Success(data = productList.map { it.toExternal() })
             }
-            401 -> Result.Error("not authorized")
-            409 -> Result.Error("conflict")
-            408 -> Result.Error("request timed-out")
-            413 -> Result.Error("payload too large")
-            in 500..599 -> Result.Error("server error")
-            else -> Result.Error("unknown error")
+            401 -> Result.Error(errorType = NetworkError.UNAUTHORIZED)
+            409 -> Result.Error(errorType = NetworkError.CONFLICT)
+            408 -> Result.Error(errorType = NetworkError.REQUEST_TIMEOUT)
+            413 -> Result.Error(errorType = NetworkError.PAYLOAD_TOO_LARGE)
+            in 500..599 -> Result.Error(errorType = NetworkError.SERVER_ERROR)
+            else -> Result.Error(errorType = NetworkError.UNKNOWN)
         }
         emit(result)
     }
