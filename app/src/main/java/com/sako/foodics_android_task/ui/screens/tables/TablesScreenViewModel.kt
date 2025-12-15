@@ -12,10 +12,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.sako.foodics_android_task.utils.resultWrapper.Result
+import org.koin.core.annotation.InjectedParam
 
 class TablesScreenViewModel(
-    private val productRepository: ProductRepository,
-    private val categoryRepository: CategoryRepository
+    @InjectedParam private val productRepository: ProductRepository,
+    @InjectedParam private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     private val _tablesUiState = MutableStateFlow<TablesUiState>(TablesUiState())

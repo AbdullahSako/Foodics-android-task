@@ -17,8 +17,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.SerializationException
 import com.sako.foodics_android_task.utils.resultWrapper.Result
 import kotlinx.coroutines.flow.flow
+import org.koin.core.annotation.InjectedParam
 
-class ProductRepositoryImpl(private val httpClient: HttpClient): ProductRepository {
+class ProductRepositoryImpl(@InjectedParam private val httpClient: HttpClient): ProductRepository {
 
     override fun loadProductList(): Flow<Result<List<Product>>> = flow {
         emit(Result.Loading())

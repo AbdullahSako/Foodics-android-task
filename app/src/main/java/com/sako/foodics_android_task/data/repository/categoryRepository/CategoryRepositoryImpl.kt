@@ -20,8 +20,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.SerializationException
+import org.koin.core.annotation.InjectedParam
 
-class CategoryRepositoryImpl(val httpClient: HttpClient) : CategoryRepository {
+class CategoryRepositoryImpl(@InjectedParam val httpClient: HttpClient) : CategoryRepository {
 
     override suspend fun loadCategoriesList(): Flow<Result<List<Category>>> = flow {
         emit(Result.Loading())
