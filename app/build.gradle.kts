@@ -62,6 +62,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.cash.turbine)
 
     //kotlinx serialization
     implementation(libs.kotlinx.serialization.core)
@@ -81,6 +83,7 @@ dependencies {
     //koin
     implementation(libs.io.insert.koin.android)
     implementation(libs.io.insert.koin.compose)
+    implementation(libs.io.insert.koin.test.junit4)
 
     //ktor
     implementation(libs.ktor.client.core)
@@ -89,6 +92,8 @@ dependencies {
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.org.slf4j.android)
+    testImplementation(libs.ktor.client.mock)
+
 
 
 }
