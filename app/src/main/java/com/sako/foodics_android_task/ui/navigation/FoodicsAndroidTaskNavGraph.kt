@@ -1,7 +1,11 @@
 package com.sako.foodics_android_task.ui.navigation
 
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
@@ -20,16 +24,16 @@ fun FoodicsAndroidTaskNavGraph(modifier: Modifier = Modifier, navBackStack: NavB
         onBack = { navBackStack.removeLastOrNull() },
         entryProvider = entryProvider {
             entry<TablesScreenKey> {
-                TablesScreen()
+                TablesScreen(Modifier.statusBarsPadding().navigationBarsPadding().padding(horizontal = 15.dp))
             }
             entry<OrdersScreenKey> {
-                OrdersScreen()
+                OrdersScreen(Modifier.statusBarsPadding().padding(horizontal = 15.dp))
             }
             entry<MenuScreenKey> {
-                MenuScreen()
+                MenuScreen(Modifier.statusBarsPadding().padding(horizontal = 15.dp))
             }
             entry<SettingsScreenKey> {
-                SettingsScreen()
+                SettingsScreen(Modifier.statusBarsPadding().padding(horizontal = 15.dp))
             }
         })
 
