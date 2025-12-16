@@ -95,7 +95,6 @@ fun ViewOrderButton(
     mainUIState: MainUIState,
     onViewOrderClick: () -> Unit
 ) {
-    mainUIState.cartItemQuantity.logd()
 
     AnimatedVisibility(
         modifier = modifier,

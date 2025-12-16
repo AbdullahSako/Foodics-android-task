@@ -107,5 +107,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
+    //coil
+    implementation(libs.coil.kt.compose)
+    implementation(libs.coil.kt.network.okhttp)
 
 }

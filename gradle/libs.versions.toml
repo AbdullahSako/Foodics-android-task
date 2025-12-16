@@ -25,6 +25,7 @@ coroutineTest= "1.10.2"
 turbine= "1.2.1"
 ksp="2.3.3"
 room="2.8.4"
+coil = "3.3.0"
 
 [libraries]
 androidx-core = { module = "androidx.test:core", version.ref = "core" }
@@ -65,6 +66,8 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktorCli
 jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutineTest" }
 cash-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+coil-kt-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-kt-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
