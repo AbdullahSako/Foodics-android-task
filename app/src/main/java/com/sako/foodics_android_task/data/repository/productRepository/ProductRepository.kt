@@ -11,6 +11,6 @@ interface ProductRepository {
 
     fun loadProductList(): Flow<List<Product>>
 
-    fun filterProductList(query: String? = null, category: Category? = null): Flow<List<Product>>
+    fun setFilterOptions(query: String? = null, category: Category? = null)
 
 }
