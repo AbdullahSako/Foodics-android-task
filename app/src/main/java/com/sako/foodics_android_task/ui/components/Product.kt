@@ -17,19 +17,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.sako.foodics_android_task.R
 
 @Composable
-fun Product(modifier: Modifier = Modifier,title: String,subtitle: String,price: String) {
+fun Product(modifier: Modifier = Modifier,title: String,subtitle: String,price: String,imageUrl: String) {
 
     Card(modifier = modifier) {
 
         Column() {
-            Image(
+            AsyncImage(
                 modifier = Modifier.weight(1f),
-                painter = painterResource(R.drawable.img_cheese_burger),
+                model = imageUrl,
                 contentDescription = "",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+
             )
 
 

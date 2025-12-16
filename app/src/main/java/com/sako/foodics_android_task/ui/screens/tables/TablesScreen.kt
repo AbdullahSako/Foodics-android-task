@@ -215,7 +215,8 @@ fun ProductsGridList(
                 }),
                 title = productItem.name ?: "",
                 subtitle = productItem.description ?: "",
-                price = productItem.price.toString()
+                price = productItem.price.toString(),
+                imageUrl = productItem.image ?: ""
             )
         }
     }
