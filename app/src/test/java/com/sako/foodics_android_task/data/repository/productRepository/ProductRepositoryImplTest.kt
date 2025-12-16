@@ -2,7 +2,7 @@ package com.sako.foodics_android_task.data.repository.productRepository
 
 import app.cash.turbine.test
 import com.sako.foodics_android_task.utils.resultWrapper.NetworkError
-import com.sako.foodics_android_task.utils.resultWrapper.Result
+import com.sako.foodics_android_task.utils.resultWrapper.RefreshResult
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -68,9 +68,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val success = awaitItem() as Result.Success
+            val success = awaitItem() as RefreshResult.Success
             assertEquals(1, success.data?.size ?: 0)
 
             awaitComplete()
@@ -83,9 +83,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.NO_INTERNET)
 
             awaitComplete()
@@ -99,9 +99,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.SERIALIZATION)
 
             awaitComplete()
@@ -114,9 +114,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.UNAUTHORIZED)
 
             awaitComplete()
@@ -129,9 +129,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.CONFLICT)
 
             awaitComplete()
@@ -144,9 +144,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.REQUEST_TIMEOUT)
 
             awaitComplete()
@@ -159,9 +159,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.PAYLOAD_TOO_LARGE)
 
             awaitComplete()
@@ -174,9 +174,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.SERVER_ERROR)
 
             awaitComplete()
@@ -189,9 +189,9 @@ class ProductRepositoryImplTest {
         val repo = ProductRepositoryImpl(client)
 
         repo.loadProductList().test {
-            assert(awaitItem() is Result.Loading)
+            assert(awaitItem() is RefreshResult.Loading)
 
-            val error = awaitItem() as Result.Error
+            val error = awaitItem() as RefreshResult.Error
             assertEquals(error.errorType , NetworkError.UNKNOWN)
 
             awaitComplete()

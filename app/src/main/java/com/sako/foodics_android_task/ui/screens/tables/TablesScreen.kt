@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.PrimaryScrollableTabRow
@@ -27,12 +26,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,8 +41,7 @@ import com.sako.foodics_android_task.R
 import com.sako.foodics_android_task.ui.components.MainToolbar
 import com.sako.foodics_android_task.ui.components.Product
 import com.sako.foodics_android_task.utils.ext.loge
-import com.sako.foodics_android_task.utils.resultWrapper.Result
-import kotlinx.coroutines.launch
+import com.sako.foodics_android_task.utils.resultWrapper.RefreshResult
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -51,7 +51,7 @@ fun TablesScreen(
 ) {
     val uiState by viewModel.tablesUiState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
+    val localResource = LocalResources.current
 
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -66,11 +66,7 @@ fun TablesScreen(
                     .padding(top = 10.dp)
             )
             ProductsCategoryTabRow(Modifier, uiState)
-            ProductsGridList(Modifier, uiState = uiState, onShowSnackBar = { message ->
-                coroutineScope.launch {
-                    snackBarHostState.showSnackbar("Something went wrong.")
-                }
-            })
+            ProductsGridList(Modifier, uiState = uiState)
 
 
         }
@@ -79,6 +75,15 @@ fun TablesScreen(
             modifier = Modifier.align(Alignment.BottomCenter),
             hostState = snackBarHostState
         )
+    }
+
+
+    //shows a snack bar on data source refresh error
+    LaunchedEffect(uiState.productListRefreshResult) {
+        if(uiState.productListRefreshResult is RefreshResult.Error){
+            uiState.productListRefreshResult?.errorType.loge("NetworkError","ProductsAPI")
+            snackBarHostState.showSnackbar(localResource.getString(R.string.something_went_wrong))
+        }
     }
 
 
@@ -128,7 +133,7 @@ fun ProductsSearchBar(modifier: Modifier = Modifier) {
 fun ProductsCategoryTabRow(modifier: Modifier = Modifier, uiState: TablesUiState) {
     val selectedIndex = remember { mutableStateOf(0) }
 
-    AnimatedContent(uiState.categoryListResult?.data) {
+    AnimatedContent(uiState.categoryList) {
         if (!it.isNullOrEmpty()) {
             PrimaryScrollableTabRow(modifier = modifier, selectedTabIndex = selectedIndex.value) {
                 it.forEachIndexed { index, category ->
@@ -146,43 +151,25 @@ fun ProductsCategoryTabRow(modifier: Modifier = Modifier, uiState: TablesUiState
 @Composable
 fun ProductsGridList(
     modifier: Modifier = Modifier,
-    uiState: TablesUiState,
-    onShowSnackBar: (message: String) -> Unit
+    uiState: TablesUiState
 ) {
 
 
-    when (uiState.productListResult) {
-        is Result.Loading -> {
-            Box(modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Adaptive(minSize = 148.dp),
+        horizontalArrangement = Arrangement.spacedBy(15.dp),
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+        contentPadding = PaddingValues(vertical = 15.dp)
+    ) {
+        items(uiState.productList ?: listOf()) { productItem ->
+            Product(
+                modifier = Modifier.heightIn(max = 256.dp),
+                title = productItem.name ?: "",
+                subtitle = productItem.description ?: "",
+                price = productItem.price.toString()
+            )
         }
-
-        is Result.Success -> {
-            LazyVerticalGrid(
-                modifier = modifier,
-                columns = GridCells.Adaptive(minSize = 148.dp),
-                horizontalArrangement = Arrangement.spacedBy(15.dp),
-                verticalArrangement = Arrangement.spacedBy(15.dp),
-                contentPadding = PaddingValues(vertical = 15.dp)
-            ) {
-                items(uiState.productListResult.data ?: listOf()) { productItem ->
-                    Product(
-                        modifier = Modifier.heightIn(max = 256.dp),
-                        title = productItem.name ?: "",
-                        subtitle = productItem.description ?: "",
-                        price = productItem.price.toString()
-                    )
-                }
-            }
-        }
-
-        is Result.Error -> {
-            uiState.productListResult.errorType.loge("NetworkError","ProductsAPI")
-            onShowSnackBar.invoke("Something went wrong.")
-        }
-
-        else -> {}
     }
 
 

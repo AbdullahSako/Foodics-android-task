@@ -2,7 +2,6 @@ package com.sako.foodics_android_task.data.repository.categoryRepository
 
 import app.cash.turbine.test
 import com.sako.foodics_android_task.utils.resultWrapper.NetworkError
-import com.sako.foodics_android_task.utils.resultWrapper.Result
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
