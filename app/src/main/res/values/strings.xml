@@ -9,4 +9,5 @@
     <string name="search_hint">Search for products</string>
     <string name="cd_clear_search">Clear search key</string>
     <string name="something_went_wrong">Something went wrong.</string>
+    <string name="view_order">View order</string>
 </resources>

@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sako.foodics_android_task.R
 import com.sako.foodics_android_task.data.model.external.Category
+import com.sako.foodics_android_task.data.model.external.Product
 import com.sako.foodics_android_task.ui.components.MainToolbar
 import com.sako.foodics_android_task.ui.components.Product
 import com.sako.foodics_android_task.utils.ext.loge
@@ -51,7 +52,8 @@ import java.util.UUID
 @Composable
 fun TablesScreen(
     modifier: Modifier = Modifier,
-    viewModel: TablesScreenViewModel = koinViewModel()
+    viewModel: TablesScreenViewModel = koinViewModel(),
+    onProductClick: (product: Product) -> Unit
 ) {
     val searchKey = remember { mutableStateOf("") }
     val selectedTabIndex = remember { mutableIntStateOf(0) }
@@ -85,7 +87,7 @@ fun TablesScreen(
                 onTabSelected = { category ->
                     viewModel.setFilters(searchKey.value, category)
                 })
-            ProductsGridList(Modifier, uiState = uiState)
+            ProductsGridList(Modifier, uiState = uiState, onProductClick = {onProductClick.invoke(it)})
 
 
         }
@@ -194,7 +196,8 @@ fun ProductsCategoryTabRow(
 @Composable
 fun ProductsGridList(
     modifier: Modifier = Modifier,
-    uiState: TablesUiState
+    uiState: TablesUiState,
+    onProductClick: (product: Product) -> Unit
 ) {
 
 
@@ -203,11 +206,13 @@ fun ProductsGridList(
         columns = GridCells.Adaptive(minSize = 148.dp),
         horizontalArrangement = Arrangement.spacedBy(15.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
-        contentPadding = PaddingValues(vertical = 15.dp)
+        contentPadding = PaddingValues(top = 15.dp, bottom = 75.dp)
     ) {
         items(items= uiState.productList ?: listOf(), key = {it.id?: UUID.randomUUID()}) { productItem ->
             Product(
-                modifier = Modifier.heightIn(max = 256.dp).animateItem(),
+                modifier = Modifier.heightIn(max = 256.dp).animateItem().clickable(onClick = {
+                    onProductClick.invoke(productItem)
+                }),
                 title = productItem.name ?: "",
                 subtitle = productItem.description ?: "",
                 price = productItem.price.toString()
