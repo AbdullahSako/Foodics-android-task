@@ -70,6 +70,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.cash.turbine)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.core)
 
     //kotlinx serialization
     implementation(libs.kotlinx.serialization.core)
@@ -101,9 +103,9 @@ dependencies {
     testImplementation(libs.ktor.client.mock)
 
     //room
-    implementation("androidx.room:room-runtime:2.8.4")
-    ksp("androidx.room:room-compiler:2.8.4")
-    implementation("androidx.room:room-ktx:2.8.4")
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
 
 }
