@@ -2,6 +2,7 @@ package com.sako.foodics_android_task.data.model.network
 
 
 import com.sako.foodics_android_task.data.model.external.Product
+import com.sako.foodics_android_task.data.model.local.LocalProduct
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -26,6 +27,17 @@ fun NetworkProduct.toExternal() : Product {
         category = category?.toExternal(),
         description = description,
         id = id,
+        image = image,
+        name = name,
+        price = price
+    )
+}
+
+fun NetworkProduct.toLocal() : LocalProduct {
+    return LocalProduct(
+        categoryId = category?.id?:0,
+        description = description,
+        id = id?:"",
         image = image,
         name = name,
         price = price
