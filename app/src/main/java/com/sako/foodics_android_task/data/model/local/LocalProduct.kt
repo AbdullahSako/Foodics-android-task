@@ -16,15 +16,3 @@ data class LocalProduct(
     val name: String?,
     val price: Double?
 )
-
-fun LocalProduct.toExternal(categoryName:String): Product {
-    return Product(
-        category = Category(id = categoryId, name = categoryName),
-        description = description,
-        id = id,
-        image = image,
-        name = name,
-        price = price
-    )
-
-}

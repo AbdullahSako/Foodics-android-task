@@ -6,12 +6,11 @@ import com.sako.foodics_android_task.data.model.external.Category
 import com.sako.foodics_android_task.data.model.external.Product
 import com.sako.foodics_android_task.data.repository.categoryRepository.CategoryRepository
 import com.sako.foodics_android_task.data.repository.productRepository.ProductRepository
-import com.sako.foodics_android_task.utils.ext.logd
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.sako.foodics_android_task.utils.resultWrapper.Result
+import com.sako.foodics_android_task.utils.resultWrapper.RefreshResult
 import org.koin.core.annotation.InjectedParam
 
 class TablesScreenViewModel(
@@ -24,23 +23,56 @@ class TablesScreenViewModel(
         get() = _tablesUiState
 
     init {
-        loadAndObserveCategoryList()
-        loadAndObserveProductList()
+        refreshProducts()
+        refreshCategories()
+
+        observeProductList()
+        observeCategoryList()
     }
 
 
-    private fun loadAndObserveCategoryList() {
+    /**
+     * Refresh category list from data source
+     * */
+    private fun refreshCategories(){
         viewModelScope.launch(Dispatchers.IO) {
-            categoryRepository.loadCategoriesList().collect {
-                _tablesUiState.value = _tablesUiState.value.copy(categoryListResult = it)
+            categoryRepository.refreshCategories().collect {
+                _tablesUiState.value = _tablesUiState.value.copy(categoryListRefreshResult = it)
             }
         }
     }
 
-    private fun loadAndObserveProductList(){
+
+    /**
+     * Observe changes on category list
+     * */
+    private fun observeCategoryList() {
+        viewModelScope.launch(Dispatchers.IO) {
+            categoryRepository.loadCategories().collect {
+                _tablesUiState.value = _tablesUiState.value.copy(categoryList = it)
+            }
+        }
+    }
+
+    /**
+     * Refresh product list from data source
+     * */
+    private fun refreshProducts(){
+        viewModelScope.launch(Dispatchers.IO) {
+            productRepository.refreshProductList().collect {
+                _tablesUiState.value = _tablesUiState.value.copy(productListRefreshResult = it)
+            }
+        }
+    }
+
+
+    /**
+     * Observe changes on product list
+     * */
+    private fun observeProductList(){
         viewModelScope.launch (Dispatchers.IO){
             productRepository.loadProductList().collect {
-                _tablesUiState.value = _tablesUiState.value.copy(productListResult = it)
+                _tablesUiState.value = _tablesUiState.value.copy(productList = it)
             }
         }
     }
@@ -50,6 +82,9 @@ class TablesScreenViewModel(
 
 
 data class TablesUiState(
-    val productListResult: Result<List<Product>>? = null,
-    val categoryListResult: Result<List<Category>>? = null
+    val productList: List<Product>? = null,
+    val categoryList: List<Category>? = null,
+    val productListRefreshResult: RefreshResult? = null,
+    val categoryListRefreshResult: RefreshResult? = null
+
 )

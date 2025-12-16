@@ -13,6 +13,8 @@ data class LocalCategoryWithProducts(
     val products: List<LocalProduct>
 )
 
-fun LocalCategoryWithProducts.toExternalProductList():List<Product>{
-    return products.map { it.toExternal(category.name?:"") }
+fun LocalCategoryWithProducts.toExternalProductList(): List<Product> {
+    return products.map {
+        Product(category.toExternal(), it.description, it.id, it.image, it.name, it.price)
+    }
 }
