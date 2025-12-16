@@ -78,6 +78,12 @@ class TablesScreenViewModel(
     }
 
 
+    fun setFilters(query: String?, category: Category?) {
+        productRepository.setFilterOptions(query, category)
+    }
+
+
+
 }
 
 
