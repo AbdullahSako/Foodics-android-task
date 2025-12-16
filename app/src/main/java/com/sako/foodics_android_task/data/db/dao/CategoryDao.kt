@@ -27,4 +27,7 @@ interface CategoryDao {
         categoryId: Long
     ): LocalCategoryWithProducts?
 
+
+    @Query("DELETE FROM localcategory")
+    fun clearAllCategories()
 }

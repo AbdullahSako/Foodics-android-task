@@ -1,5 +1,6 @@
 package com.sako.foodics_android_task.data.repository.categoryRepository
 
+import androidx.room.withTransaction
 import com.sako.foodics_android_task.BuildConfig
 import com.sako.foodics_android_task.data.Constants
 import com.sako.foodics_android_task.data.db.AppDatabase
@@ -54,7 +55,12 @@ class CategoryRepositoryImpl(
             in 200..299 -> {
                 //write data to DB on success
                 val categoryList = response.body<List<NetworkCategory>>()
-                db.categoryDao().upsertCategoryList(categoryList.map { it.toLocal() })
+
+                db.withTransaction {
+                    //clear all previous data
+                    db.categoryDao().clearAllCategories()
+                    db.categoryDao().upsertCategoryList(categoryList.map { it.toLocal() })
+                }
 
                 RefreshResult.Success()
             }

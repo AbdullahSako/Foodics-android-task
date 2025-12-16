@@ -20,4 +20,10 @@ interface ProductDao {
     @Upsert
     fun upsertProductList(productList: List<LocalProduct>)
 
+    @Query("DELETE FROM localproduct")
+    fun clearAllProducts()
+
 }
+
+
+

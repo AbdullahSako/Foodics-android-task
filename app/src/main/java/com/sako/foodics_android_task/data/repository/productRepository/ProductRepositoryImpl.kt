@@ -1,5 +1,6 @@
 package com.sako.foodics_android_task.data.repository.productRepository
 
+import androidx.room.withTransaction
 import com.sako.foodics_android_task.BuildConfig
 import com.sako.foodics_android_task.data.Constants
 import com.sako.foodics_android_task.data.db.AppDatabase
@@ -55,7 +56,12 @@ class ProductRepositoryImpl(@InjectedParam private val httpClient: HttpClient,@I
 
                 //write product list to DB on success
                 val productList = response.body<List<NetworkProduct>>()
-                db.productDao().upsertProductList(productList.map { it.toLocal() })
+
+                db.withTransaction {
+                    //clear all previous data
+                    db.productDao().clearAllProducts()
+                    db.productDao().upsertProductList(productList.map { it.toLocal() })
+                }
 
                 RefreshResult.Success()
             }
