@@ -10,5 +10,5 @@ interface CartRepository {
 
     fun getCartItemList(): Flow<List<CartItem>>
 
-    fun clearCart()
+    suspend fun clearCart()
 }

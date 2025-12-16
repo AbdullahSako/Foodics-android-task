@@ -34,7 +34,7 @@ class CartRepositoryImpl(
         return db.cartDao().getAllCartItems().map { list -> list.map { it.toExternal() } }
     }
 
-    override fun clearCart() {
+    override suspend fun clearCart() {
         db.cartDao().clearCart()
     }
 }

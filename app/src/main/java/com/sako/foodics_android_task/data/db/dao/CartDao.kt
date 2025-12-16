@@ -19,6 +19,6 @@ interface CartDao {
     fun upsertCartItem(cartItem: LocalCartItem)
 
     @Query("DELETE FROM LocalCartItem")
-    fun clearCart()
+    suspend fun clearCart()
 
 }
