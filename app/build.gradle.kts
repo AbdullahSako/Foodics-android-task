@@ -1,7 +1,12 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 android {
@@ -18,6 +23,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String","mockaroo_api_key","\"${gradleLocalProperties(rootDir, providers).getProperty("api_key")}\"")
     }
 
     buildTypes {
@@ -38,6 +44,11 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
@@ -57,4 +68,47 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.cash.turbine)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.core)
+
+    //kotlinx serialization
+    implementation(libs.kotlinx.serialization.core)
+
+    //navigation3
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.material3.adaptive.navigation3)
+
+    //adaptive navigation suite
+    implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
+
+    //material icons
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    //koin
+    implementation(libs.io.insert.koin.android)
+    implementation(libs.io.insert.koin.compose)
+    implementation(libs.io.insert.koin.test.junit4)
+
+    //ktor
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.org.slf4j.android)
+    testImplementation(libs.ktor.client.mock)
+
+    //room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    //coil
+    implementation(libs.coil.kt.compose)
+    implementation(libs.coil.kt.network.okhttp)
+
 }
